@@ -1,6 +1,7 @@
 package main
 
 import (
+	"Golang/M2/banco/clientes"
 	"Golang/M2/banco/contas"
 	"fmt"
 )
@@ -8,8 +9,23 @@ import (
 //Null em Go é nil
 
 func main() {
-	minhaConta := contas.ContaCorrente{Titular: "Bruna", NumeroAgencia: 123, NumeroConta: 321, Saldo: 100.00}
-	minhaConta2 := contas.ContaCorrente{Titular: "Bruna", NumeroAgencia: 123, NumeroConta: 321, Saldo: 100.00}
+	minhaConta := contas.ContaCorrente{
+		Titular: clientes.Titular{
+			Nome:      "Bruna",
+			CPF:       "1234",
+			Profissao: "Programadora",
+		},
+		NumeroAgencia: 123,
+		NumeroConta:   321}
+	minhaConta.Depositar(500.0)
+	minhaConta2 := contas.ContaCorrente{Titular: clientes.Titular{
+		Nome:      "Bruna",
+		CPF:       "1234",
+		Profissao: "Programadora",
+	},
+		NumeroAgencia: 123,
+		NumeroConta:   321}
+	minhaConta2.Depositar(250)
 	/*
 		A utilização do * faz com que os ponteiros
 		identifiquem as tipagens criadas e aloquem as
@@ -34,11 +50,11 @@ func main() {
 	fmt.Println(resp, "Novo Saldo:", valor)
 
 	minhaConta.Depositar(5.0)
-	fmt.Println("Novo Saldo:", minhaConta.Saldo)
+	fmt.Println("Novo Saldo:", minhaConta.MostrarSaldo())
 
 	if minhaConta.Transferir(&minhaConta2, 10.0) {
-		fmt.Println("Novo Saldo Conta 1:", minhaConta.Saldo)
-		fmt.Println("Novo Saldo Conta 2:", minhaConta2.Saldo)
+		fmt.Println("Novo Saldo Conta 1:", minhaConta.MostrarSaldo())
+		fmt.Println("Novo Saldo Conta 2:", minhaConta2.MostrarSaldo())
 	} else {
 		fmt.Println("Não foi possível fazer a transferência")
 	}

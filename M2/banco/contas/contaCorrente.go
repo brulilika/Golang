@@ -1,6 +1,9 @@
 package contas
 
-import "fmt"
+import (
+	"Golang/M2/banco/clientes"
+	"fmt"
+)
 
 type ContaCorrente struct {
 	/*
@@ -8,19 +11,19 @@ type ContaCorrente struct {
 		os valores de cada campo da struct inicia com
 		o ZeroValue de cada tipo
 	*/
-	Titular       string
+	Titular       clientes.Titular
 	NumeroAgencia int
-	NumeroConta   int
-	Saldo         float64
+	NumeroConta   int     //propriedade publica
+	saldo         float64 //propriedade privada
 }
 
 func (c *ContaCorrente) Sacar(valor float64) (string, float64) {
-	allow := valor <= c.Saldo && valor > 0
+	allow := valor <= c.saldo && valor > 0
 	if allow {
-		c.Saldo -= valor
-		return "Saque realizado.", c.Saldo
+		c.saldo -= valor
+		return "Saque realizado.", c.saldo
 	} else {
-		return "Valor inválido.", c.Saldo
+		return "Valor inválido.", c.saldo
 	}
 
 }
@@ -28,12 +31,11 @@ func (c *ContaCorrente) Sacar(valor float64) (string, float64) {
 func (c *ContaCorrente) Depositar(valor float64) {
 	allow := valor > 0
 	if allow {
-		c.Saldo += valor
+		c.saldo += valor
 		fmt.Println("Deposito realizado")
 	} else {
 		fmt.Println("Valor inválido")
 	}
-
 }
 
 /*
@@ -41,13 +43,20 @@ Como vamos dentro da função vai fazer a alteração do conteúdo do apontament
 é preciso pegar o alocamento da variável
 */
 func (c *ContaCorrente) Transferir(contaDestino *ContaCorrente, valor float64) bool {
-	allow := valor <= c.Saldo && valor > 0
+	allow := valor <= c.saldo && valor > 0
 	if allow {
-		c.Saldo -= valor
-		contaDestino.Saldo += valor
+		c.saldo -= valor
+		contaDestino.saldo += valor
 		return true
 	} else {
 		return false
 	}
+}
 
+/*
+Com a ideia de encapsular uma propriedade não permitindo que esta seja alterada a qualquer momento
+sem regras a serem aplicadas
+*/
+func (c *ContaCorrente) MostrarSaldo() float64 {
+	return c.saldo
 }
