@@ -1,0 +1,6 @@
+05/10/2022 11:40:10 - https://www.alura.com.br - online: true
+05/10/2022 11:40:11 - https://random-status-code.herokuapp.com - online: true
+05/10/2022 11:40:12 - https://github.com/brulilika - online: true
+05/10/2022 11:40:17 - https://www.alura.com.br - online: true
+05/10/2022 11:40:18 - https://random-status-code.herokuapp.com - online: false
+05/10/2022 11:40:18 - https://github.com/brulilika - online: true
