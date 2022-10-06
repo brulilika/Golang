@@ -3,8 +3,8 @@
 
 Formação em Golang fornecida pela Alura
 
-- [ ] Go: a linguagem do Google
-- [ ] Go: orientação a objeto
+- [x] Go: a linguagem do Google
+- [x] Go: orientação a objeto
 - [ ] Go: crie uma aplicação em web
 - [ ] Go: desenvolvendo uma API REST
 - [ ] Go e Gin: criando API REST com simplicidade
