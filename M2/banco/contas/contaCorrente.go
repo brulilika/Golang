@@ -1,6 +1,10 @@
 package contas
 
 import (
+	/*
+		Como a struct de Conta Corrente vai ser composta com a struct de Titular
+		é preciso fazer a importação do package criado
+	*/
 	"Golang/M2/banco/clientes"
 	"fmt"
 )

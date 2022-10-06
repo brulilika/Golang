@@ -6,7 +6,18 @@ import (
 	"fmt"
 )
 
-//Null em Go é nil
+// Null em Go é nil
+type iConta interface {
+	Sacar(valor float64) (string, float64)
+}
+
+/*
+A necessidade de implementação de determinada função a partir de uma interface
+é dada de modo implicito a partir da utilização da função por parte da struct
+*/
+func pagarBoleto(conta iConta, valor float64) {
+	conta.Sacar(valor)
+}
 
 func main() {
 	minhaConta := contas.ContaCorrente{
@@ -59,4 +70,6 @@ func main() {
 		fmt.Println("Não foi possível fazer a transferência")
 	}
 
+	pagarBoleto(&minhaConta, 100)
+	fmt.Println("Novo Saldo Conta 1:", minhaConta.MostrarSaldo())
 }
