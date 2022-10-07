@@ -9,7 +9,7 @@ type Produto struct {
 	Nome       string
 	Descricao  string
 	Valor      float64
-	Quantidade int32
+	Quantidade int
 }
 
 func BuscaProdutos() []Produto {
@@ -25,7 +25,8 @@ func BuscaProdutos() []Produto {
 	produtos := []Produto{}
 
 	for dbProducts.Next() {
-		var id, quantidade int
+		var id int
+		var quantidade int
 		var nome, descricao string
 		var valor float64
 
@@ -36,7 +37,7 @@ func BuscaProdutos() []Produto {
 		prod.Nome = nome
 		prod.Descricao = descricao
 		prod.Valor = valor
-		prod.Quantidade = int32(quantidade)
+		prod.Quantidade = quantidade
 
 		produtos = append(produtos, prod)
 	}
@@ -48,4 +49,16 @@ func BuscaProdutos() []Produto {
 	defer db.Close()
 
 	return produtos
+}
+
+func CriaNovoProduto(nome, descricao string, valor float64, quantidade int) {
+	db := banco.DatabaseConnection()
+
+	insert, err := db.Prepare("INSERT INTO PRODUTOS(nome, descricao, valor, quantidade) values($1, $2, $3, $4)")
+	if err != nil {
+		panic(err.Error())
+	}
+
+	insert.Exec(nome, descricao, valor, quantidade)
+	defer db.Close()
 }
