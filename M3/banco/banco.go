@@ -11,7 +11,7 @@ import (
 )
 
 func DatabaseConnection() *sql.DB {
-	connection := "user=postgres dbname=loja password=tamake28 host=localhost sslmode=disable"
+	connection := "user=postgres dbname=sua_tabela password=sua_senha host=localhost sslmode=disable"
 	db, err := sql.Open("postgres", connection)
 	if err != nil {
 		panic(err.Error())
