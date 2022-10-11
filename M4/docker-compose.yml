@@ -7,7 +7,7 @@ services:
       - POSTGRES_PASSWORD=root
       - POSTGRES_DB=root      
     ports:
-      - "5300:5300"
+      - "5433:5433"
     volumes:
       - ./migration/docker-database-initial.sql:/docker-entrypoint-initdb.d/docker-database-initial.sql   
 
@@ -17,6 +17,6 @@ services:
       PGADMIN_DEFAULT_EMAIL: "teste@teste.com"
       PGADMIN_DEFAULT_PASSWORD: "123456"
     ports:
-      - "5001:80"
+      - "54331:80"
     depends_on:
       - postgres

@@ -1,11 +1,11 @@
 package controllers
 
 import (
+	"Golang/M4/database"
 	"Golang/M4/models"
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strconv"
 
 	"github.com/gorilla/mux"
 )
@@ -15,16 +15,41 @@ func Home(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetAllPersonalidades(w http.ResponseWriter, r *http.Request) {
-	json.NewEncoder(w).Encode(models.Personalidades)
+	var p []models.Personalidade
+	database.DB.Find(&p)
+	json.NewEncoder(w).Encode(p)
 }
 
 func GetByIdPersonalidades(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
 
-	for _, personalidade := range models.Personalidades {
-		if strconv.Itoa(personalidade.Id) == id {
-			json.NewEncoder(w).Encode(personalidade)
-		}
-	}
+	var personalidade models.Personalidade
+	database.DB.First(&personalidade, id)
+	json.NewEncoder(w).Encode(personalidade)
+}
+
+func CreatePersonalidade(w http.ResponseWriter, r *http.Request) {
+	var newPersonalidade models.Personalidade
+	json.NewDecoder(r.Body).Decode(&newPersonalidade)
+	database.DB.Create(&newPersonalidade)
+	json.NewEncoder(w).Encode(newPersonalidade)
+}
+
+func DeletePersonalidade(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+	var personalidade models.Personalidade
+	database.DB.Delete(&personalidade, id)
+	json.NewEncoder(w).Encode(personalidade)
+}
+
+func EditPersonalidade(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+	var personalidade models.Personalidade
+	database.DB.First(&personalidade, id)
+	json.NewDecoder(r.Body).Decode(&personalidade)
+	database.DB.Save(&personalidade)
+	json.NewEncoder(w).Encode(personalidade)
 }

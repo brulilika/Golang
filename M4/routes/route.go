@@ -13,5 +13,8 @@ func HandleResquest() {
 	r.HandleFunc("/", controllers.Home)
 	r.HandleFunc("/api/personalidades", controllers.GetAllPersonalidades).Methods("Get")
 	r.HandleFunc("/api/personalidades/{id}", controllers.GetByIdPersonalidades).Methods("Get")
-	log.Fatal(http.ListenAndServe(":8000", nil))
+	r.HandleFunc("/api/personalidades", controllers.CreatePersonalidade).Methods("Post")
+	r.HandleFunc("/api/personalidades/{id}", controllers.DeletePersonalidade).Methods("Delete")
+	r.HandleFunc("/api/personalidades/{id}", controllers.EditPersonalidade).Methods("Put")
+	log.Fatal(http.ListenAndServe(":8000", handlers.CORS(handlers.AllowedOrigins([]string{"*"}))(r)))
 }
